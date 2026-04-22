@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zenyssa — Theta Healing with Anjali</title>
+<title>Zenywsa — Theta Healing with Anjali</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -386,6 +386,127 @@
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── GOOGLE CALENDAR INTEGRATION ── */
+  #calendar-booking { background: var(--warm-white); }
+  .cal-booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 56px; align-items: start; }
+  .cal-info-panel { }
+  .cal-info-panel h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 300; color: var(--deep); margin-bottom: 16px;
+  }
+  .cal-info-panel p { font-size: 14px; line-height: 1.8; color: var(--muted); font-weight: 300; margin-bottom: 20px; }
+  .cal-feature-list { list-style: none; margin-bottom: 28px; }
+  .cal-feature-list li {
+    font-size: 13px; color: var(--muted); padding: 9px 0;
+    border-bottom: 1px solid var(--border-soft);
+    display: flex; align-items: flex-start; gap: 12px; font-weight: 300;
+  }
+  .cal-feature-list li::before { content: '✦'; color: var(--gold); font-size: 9px; margin-top: 3px; flex-shrink: 0; }
+  .cal-embed-panel { }
+  .cal-embed-container {
+    border: 1px solid var(--border-soft); overflow: hidden;
+    background: var(--cream); position: relative;
+  }
+  .cal-embed-header {
+    padding: 16px 20px; background: var(--deep);
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(184,149,90,0.2);
+  }
+  .cal-embed-header span { font-size: 12px; color: rgba(247,243,238,0.7); letter-spacing: 0.06em; }
+  .cal-embed-header .cal-embed-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); animation: pulse 2s infinite; }
+  .gcal-iframe-wrapper { position: relative; }
+  .gcal-iframe-wrapper iframe { display: block; width: 100%; border: none; }
+  .cal-embed-footer {
+    padding: 14px 20px; border-top: 1px solid var(--border-soft);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--warm-white);
+  }
+  .cal-embed-footer p { font-size: 11px; color: var(--muted); }
+  .cal-embed-footer a { font-size: 11px; color: var(--gold); text-decoration: none; letter-spacing: 0.04em; }
+  .cal-embed-footer a:hover { text-decoration: underline; }
+  .cal-zone-note {
+    margin-top: 16px; padding: 12px 16px; background: rgba(122,140,126,0.08);
+    border-left: 2px solid var(--sage); font-size: 12px; color: var(--muted); line-height: 1.6;
+  }
+  .cal-open-btn {
+    display: inline-block; margin-top: 20px;
+    padding: 14px 32px; background: var(--deep);
+    color: var(--cream); font-size: 12px; letter-spacing: 0.1em;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.25s; text-decoration: none; text-transform: uppercase;
+  }
+  .cal-open-btn:hover { background: var(--gold); }
+
+  /* ── FAQ ── */
+  #faq { background: var(--cream); }
+  .faq-layout { display: grid; grid-template-columns: 280px 1fr; gap: 64px; margin-top: 56px; align-items: start; }
+  .faq-sidebar { position: sticky; top: 100px; }
+  .faq-sidebar h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 300; color: var(--deep); margin-bottom: 16px;
+  }
+  .faq-sidebar p { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 24px; }
+  .faq-sidebar a {
+    display: inline-block; padding: 12px 24px;
+    border: 1px solid var(--gold); font-size: 12px; letter-spacing: 0.08em;
+    color: var(--gold); text-decoration: none; transition: all 0.25s;
+  }
+  .faq-sidebar a:hover { background: var(--gold); color: #fff; }
+  .faq-categories { display: flex; flex-direction: column; gap: 6px; margin-bottom: 28px; }
+  .faq-cat-btn {
+    padding: 8px 14px; text-align: left; border: 1px solid transparent;
+    font-size: 12px; letter-spacing: 0.05em; color: var(--muted);
+    background: transparent; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .faq-cat-btn:hover, .faq-cat-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(184,149,90,0.05); }
+  .faq-list { display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: 1px solid var(--border-soft); }
+  .faq-item:first-child { border-top: 1px solid var(--border-soft); }
+  .faq-question {
+    width: 100%; text-align: left; padding: 22px 0;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+    background: transparent; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .faq-q-text { font-size: 15px; font-weight: 400; color: var(--deep); line-height: 1.5; text-align: left; }
+  .faq-icon {
+    width: 28px; height: 28px; flex-shrink: 0; border: 1px solid var(--border-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--gold); transition: all 0.3s; margin-top: 2px;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); border-color: var(--gold); background: rgba(184,149,90,0.08); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+    padding-bottom: 0;
+  }
+  .faq-item.open .faq-answer { max-height: 600px; padding-bottom: 22px; }
+  .faq-answer p { font-size: 14px; line-height: 1.85; color: var(--muted); font-weight: 300; }
+  .faq-answer p + p { margin-top: 12px; }
+  .faq-answer .ans-note {
+    display: inline-block; margin-top: 12px; padding: 8px 14px;
+    background: rgba(184,149,90,0.07); border-left: 2px solid var(--gold);
+    font-size: 12px; color: var(--muted); line-height: 1.6;
+  }
+  .faq-group-label {
+    font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase;
+    padding: 28px 0 8px; font-weight: 400;
+  }
+  .faq-search-wrap { margin-bottom: 32px; position: relative; }
+  .faq-search {
+    width: 100%; padding: 12px 16px 12px 40px;
+    border: 1px solid var(--border-soft); background: var(--warm-white);
+    font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--deep); outline: none;
+    transition: border-color 0.2s;
+  }
+  .faq-search:focus { border-color: var(--gold); }
+  .faq-search::placeholder { color: rgba(107,101,96,0.5); }
+  .faq-search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 14px; pointer-events: none;
+  }
+  .faq-no-results { display: none; font-size: 14px; color: var(--muted); padding: 32px 0; text-align: center; font-style: italic; }
+
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     .nav-links { display: none; }
@@ -398,6 +519,10 @@
     .about-photo { width: 100%; }
     footer { padding: 36px 20px; }
     .footer-bottom { padding: 16px 20px; }
+    .cal-booking-grid { grid-template-columns: 1fr; }
+    .faq-layout { grid-template-columns: 1fr; }
+    .faq-sidebar { position: static; }
+    .faq-categories { flex-direction: row; flex-wrap: wrap; }
   }
 </style>
 </head>
@@ -405,13 +530,14 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">Zenyssa<span>.</span></a>
+  <a class="nav-logo" href="#">Zenywsa<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#what">Theta Healing</a></li>
     <li><a href="#about">About Anjali</a></li>
     <li><a href="#pricing">Sessions</a></li>
-    <li><a href="#privacy">Legal & Privacy</a></li>
-    <li><a class="nav-cta" href="#pricing">Book now</a></li>
+    <li><a href="#calendar-booking">Book Online</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a class="nav-cta" href="#calendar-booking">Book now</a></li>
   </ul>
 </nav>
 
@@ -557,7 +683,7 @@
       <p>Anjali's photo</p>
     </div>
     <div class="about-text">
-      <p class="section-body" style="margin-bottom:20px;">Hi, I'm Anjali — a certified Theta Healer and the founder of Zenyssa. My journey into energy healing began from a deeply personal place: I was searching for answers that conventional methods couldn't fully provide.</p>
+      <p class="section-body" style="margin-bottom:20px;">Hi, I'm Anjali — a certified Theta Healer and the founder of Zenywsa. My journey into energy healing began from a deeply personal place: I was searching for answers that conventional methods couldn't fully provide.</p>
       <p class="section-body" style="margin-bottom:20px;">Today I work with clients across Denmark, India, and the world — helping them uncover and shift the beliefs that are quietly shaping their lives. My approach is compassionate, deeply intuitive, and grounded in both technique and genuine care for your wellbeing.</p>
       <p class="section-body">Each session is a safe, confidential space — for you to be fully seen, and for real change to happen.</p>
       <div class="cert-grid">
@@ -666,7 +792,7 @@
     <div class="section-eyebrow">07 & 08 — Privacy & legal</div>
     <h2 class="section-title">Your trust, <em>protected</em></h2>
     <div class="divider"></div>
-    <p class="section-body">Zenyssa is committed to handling your personal information with full transparency, in compliance with GDPR (EU) and applicable data protection laws in Denmark and India.</p>
+    <p class="section-body">Zenywsa is committed to handling your personal information with full transparency, in compliance with GDPR (EU) and applicable data protection laws in Denmark and India.</p>
   </div>
   <div class="privacy-grid fade-in">
     <div class="legal-card">
@@ -675,11 +801,11 @@
       <div class="legal-item"><div class="legal-dot"></div><p>Data is stored securely and never sold or shared with third parties without your explicit consent.</p></div>
       <div class="legal-item"><div class="legal-dot"></div><p>You have the right to access, correct, or delete your data at any time (GDPR Articles 15–17).</p></div>
       <div class="legal-item"><div class="legal-dot"></div><p>Data is retained for 24 months after your last session, then permanently deleted.</p></div>
-      <div class="legal-item"><div class="legal-dot"></div><p>For data requests, contact: <strong>privacy@Zenyssa.com</strong></p></div>
+      <div class="legal-item"><div class="legal-dot"></div><p>For data requests, contact: <strong>privacy@zenywsa.com</strong></p></div>
       <div class="gdpr-badge">✓ GDPR Compliant · EU clients welcome</div>
       <div class="consent-box">
         <div class="consent-check"></div>
-        <p>I consent to Zenyssa collecting and processing my personal data as described in the Privacy Policy. I understand I can withdraw consent at any time.</p>
+        <p>I consent to Zenywsa collecting and processing my personal data as described in the Privacy Policy. I understand I can withdraw consent at any time.</p>
       </div>
     </div>
     <div class="legal-card">
@@ -729,10 +855,276 @@
   </div>
 </section>
 
-<!-- 9. CHATBOT -->
+<!-- GOOGLE CALENDAR BOOKING -->
+<section id="calendar-booking">
+  <div class="fade-in">
+    <div class="section-eyebrow">09 — Schedule your session</div>
+    <h2 class="section-title">Book directly in <em>real time</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Select a date and time that works for you — your appointment is confirmed instantly. All sessions take place online via Zoom.</p>
+  </div>
+  <div class="cal-booking-grid fade-in">
+    <div class="cal-info-panel">
+      <h3>What to expect when booking</h3>
+      <p>After selecting your time slot, you'll receive an automatic confirmation email with your Zoom link and a short intake form to help Anjali prepare for your session.</p>
+      <ul class="cal-feature-list">
+        <li>Instant confirmation — no waiting for replies</li>
+        <li>Automatic Zoom link sent to your inbox</li>
+        <li>Short intake form included in confirmation</li>
+        <li>Reschedule or cancel up to 24 hours in advance</li>
+        <li>Available time zones: CET (Denmark), IST (India) & more</li>
+        <li>Sessions available Mon–Sat, 9:00–19:00 CET</li>
+      </ul>
+      <div class="cal-zone-note">
+        🌐 The calendar displays times in your local timezone. If you're booking from India or outside Europe, times will automatically adjust.
+      </div>
+      <a class="cal-open-btn" href="https://calendar.google.com/calendar/appointments/schedules/" target="_blank" rel="noopener">
+        Open full booking calendar ↗
+      </a>
+    </div>
+    <div class="cal-embed-panel">
+      <div class="cal-embed-container">
+        <div class="cal-embed-header">
+          <span>Zenywsa · Live Availability</span>
+          <div class="cal-embed-dot"></div>
+        </div>
+        <div class="gcal-iframe-wrapper">
+          <!-- Replace the src with your actual Google Calendar Appointment Schedule embed URL -->
+          <!-- To get this: Google Calendar → Settings → Appointment schedules → Share → Embed -->
+          <iframe
+            src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1234_placeholder?gv=true"
+            style="width:100%;height:520px;border:none;"
+            frameborder="0"
+            scrolling="no"
+            title="Book a session with Anjali"
+            loading="lazy"
+          ></iframe>
+          <!-- Placeholder overlay shown until real Calendar URL is set -->
+          <div id="cal-placeholder" style="
+            position:absolute;inset:0;
+            background:var(--cream);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:16px;padding:40px;text-align:center;
+          ">
+            <div style="font-size:32px;opacity:0.4;">📅</div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--deep);">Calendar Coming Soon</p>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;max-width:320px;font-weight:300;">
+              Anjali's live availability will appear here once the Google Calendar appointment schedule is connected.
+            </p>
+            <div style="height:1px;width:40px;background:var(--border);"></div>
+            <p style="font-size:12px;color:var(--muted);font-weight:300;">
+              In the meantime, email <strong style="color:var(--gold);">hello@zenywsa.com</strong> to book directly.
+            </p>
+            <a href="mailto:hello@zenywsa.com" style="
+              padding:12px 28px;background:var(--deep);color:var(--cream);
+              font-size:12px;letter-spacing:0.08em;text-decoration:none;
+              transition:background 0.25s;display:inline-block;
+            " onmouseover="this.style.background='#B8955A'" onmouseout="this.style.background='#1C1917'">
+              Email to book
+            </a>
+          </div>
+        </div>
+        <div class="cal-embed-footer">
+          <p>Powered by Google Calendar · Free booking</p>
+          <a href="https://calendar.google.com/calendar/appointments/schedules/" target="_blank" rel="noopener">Open in new tab ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="fade-in">
+    <div class="section-eyebrow">10 — Frequently asked questions</div>
+    <h2 class="section-title">Everything you want to <em>know</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Answers to the questions Anjali hears most often. If yours isn't here, ask the assistant below or reach out directly.</p>
+  </div>
+
+  <div class="faq-layout fade-in">
+    <div class="faq-sidebar">
+      <h3>Browse by topic</h3>
+      <p>Filter questions by category, or search below to find exactly what you need.</p>
+      <div class="faq-categories">
+        <button class="faq-cat-btn active" onclick="filterFAQ('all', this)">All questions</button>
+        <button class="faq-cat-btn" onclick="filterFAQ('about', this)">About Theta Healing</button>
+        <button class="faq-cat-btn" onclick="filterFAQ('sessions', this)">Sessions & booking</button>
+        <button class="faq-cat-btn" onclick="filterFAQ('pricing', this)">Pricing & payment</button>
+        <button class="faq-cat-btn" onclick="filterFAQ('practical', this)">Practical details</button>
+      </div>
+      <a href="mailto:hello@zenywsa.com">Ask Anjali directly →</a>
+    </div>
+
+    <div>
+      <div class="faq-search-wrap">
+        <span class="faq-search-icon">🔍</span>
+        <input class="faq-search" type="text" placeholder="Search questions…" oninput="searchFAQ(this.value)" />
+      </div>
+
+      <div class="faq-list" id="faq-list">
+
+        <div class="faq-group-label" data-cat="about">About Theta Healing</div>
+
+        <div class="faq-item" data-cat="about">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">What exactly is Theta Healing and how does it work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>ThetaHealing® is a meditative technique developed by Vianna Stibal in 1995. It works by guiding both the practitioner and client into the theta brainwave state (4–8 Hz) — the same state experienced in deep meditation and just before sleep.</p>
+            <p>In this state, the subconscious mind becomes accessible. Anjali will guide you to identify beliefs that may be limiting your life — whether in relationships, health, abundance, or self-worth — and facilitate a shift using focused intention and connection to a higher energy.</p>
+            <span class="ans-note">Think of it as a compassionate conversation with the deeper layers of yourself — with Anjali as your guide.</span>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="about">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Is Theta Healing scientifically proven?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The theta brainwave state itself is well-documented in neuroscience research. The specific claims of ThetaHealing® as a healing modality are not yet the subject of large-scale clinical trials, as with many complementary practices.</p>
+            <p>Theta Healing is considered a complementary and holistic practice — it works alongside conventional medicine and therapy, not as a replacement. Many clients report meaningful shifts in how they feel and think after sessions, though individual results vary.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="about">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Do I need to believe in anything spiritual for it to work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Not at all. You don't need to hold any particular spiritual or religious belief. The only requirement is openness and a genuine curiosity about your inner world. Many of Anjali's clients describe themselves as sceptical at first — and still experience something meaningful.</p>
+          </div>
+        </div>
+
+        <div class="faq-group-label" data-cat="sessions">Sessions & booking</div>
+
+        <div class="faq-item" data-cat="sessions">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">What happens in my very first session?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Your first session is a 30-minute introductory call. Anjali will take time to understand you — what brought you here, what you'd most like to work on, and what feels present for you right now.</p>
+            <p>There's no pressure to share anything you're not comfortable with. You'll get a feel for the process, and Anjali will explain what belief work and the theta state involves in practice. Many clients say the first session alone gives them clarity they hadn't expected.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="sessions">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">How many sessions will I need?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>This varies from person to person and depends on what you're working on. Some people experience noticeable shifts after a single session. Others find that deeper patterns — especially those rooted in childhood or across multiple life areas — benefit from a series of sessions.</p>
+            <p>Anjali never commits you to a programme without your consent. You can always start with one session and decide from there.</p>
+            <span class="ans-note">The 3-session package is popular for those who want to work more deeply on a specific theme.</span>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="sessions">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Can I cancel or reschedule my session?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. Cancellations and rescheduling are accepted up to 24 hours before your session at no charge. Late cancellations (within 24 hours) or no-shows may result in the session fee being forfeited.</p>
+            <p>To reschedule, simply use the link in your confirmation email or reach out directly to hello@zenywsa.com.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="sessions">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Are sessions available in languages other than English?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Sessions are primarily conducted in English. If you'd like to work in another language, please reach out to hello@zenywsa.com before booking to discuss availability and arrangements.</p>
+          </div>
+        </div>
+
+        <div class="faq-group-label" data-cat="pricing">Pricing & payment</div>
+
+        <div class="faq-item" data-cat="pricing">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">What payment methods are accepted?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Anjali accepts payment via: credit/debit card, MobilePay (for clients in Denmark), PayPal, bank transfer, and UPI (for clients in India).</p>
+            <p>Payment is completed before or at the time of booking. Prices are listed in EUR; DKK and INR equivalents are available on request.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="pricing">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Is there a discount for multiple sessions?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes — the 3-session package is priced at €300, which saves you €60 compared to booking three individual full sessions. It's the most cost-effective option for those who want to explore deeper transformation over time.</p>
+            <span class="ans-note">Package sessions can be used flexibly over a period agreed with Anjali.</span>
+          </div>
+        </div>
+
+        <div class="faq-group-label" data-cat="practical">Practical details</div>
+
+        <div class="faq-item" data-cat="practical">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">How should I prepare for my session?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The most important thing is to arrive with an open mind. There's no special preparation required. If it helps, think briefly beforehand about what area of life you'd most like to address — but there's no need to come with a script.</p>
+            <p>For online sessions: find a quiet, private space where you won't be interrupted. Good headphones or earphones are recommended. Have a glass of water nearby — some clients feel slightly emotional during or after sessions.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="practical">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Is everything I share kept confidential?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely. Everything shared within a session is treated with complete confidentiality. Anjali will never share, discuss, or disclose any aspect of your session without your explicit consent.</p>
+            <p>Your personal data is handled in full compliance with GDPR (EU). See the privacy section of this site for full details.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="practical">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Can Theta Healing be done remotely / online?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes — all of Anjali's sessions are conducted online via Zoom. The work is just as effective remotely as in person; energy healing is not limited by physical distance.</p>
+            <p>Clients join from Denmark, India, Germany, the UK, the UAE, the US, and many other countries — and consistently report the experience to be just as present and meaningful as face-to-face work.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="practical">
+          <button class="faq-question" onclick="toggleFAQ(this)">
+            <span class="faq-q-text">Is Theta Healing suitable for children or teenagers?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Sessions are primarily designed for adults (18+). If you are a parent interested in Theta Healing for a younger person, please reach out directly to discuss suitability and any special arrangements that may apply.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="faq-no-results" id="faq-no-results">No questions match your search. Try different words, or <a href="mailto:hello@zenywsa.com" style="color:var(--gold)">ask Anjali directly</a>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 (renumbered). CHATBOT -->
+
 <section id="chatbot-section">
   <div class="fade-in">
-    <div class="section-eyebrow" style="color:rgba(184,149,90,0.7)">09 — Ask Anjali's assistant</div>
+    <div class="section-eyebrow" style="color:rgba(184,149,90,0.7)">11 — Ask Anjali's assistant</div>
     <h2 class="section-title">Have a <em>question</em>?</h2>
     <div class="divider" style="background:rgba(184,149,90,0.25)"></div>
     <p class="section-body">Our AI assistant can answer common questions about Theta Healing, sessions, pricing, and booking — any time, in your language.</p>
@@ -740,10 +1132,10 @@
   <div class="chat-container fade-in">
     <div class="chat-header-bar">
       <div class="online-dot"></div>
-      <span>Zenyssa Assistant · Online</span>
+      <span>Zenywsa Assistant · Online</span>
     </div>
     <div class="chat-messages" id="chat-messages">
-      <div class="msg msg-bot">Hello! I'm Anjali's assistant. I'm here to answer your questions about Theta Healing, sessions, and how to get started with Zenyssa. What would you like to know?</div>
+      <div class="msg msg-bot">Hello! I'm Anjali's assistant. I'm here to answer your questions about Theta Healing, sessions, and how to get started with Zenywsa. What would you like to know?</div>
     </div>
     <div class="chat-suggestions" id="chat-suggestions">
       <button class="sug-chip" onclick="sendSuggestion('What happens in a first session?')">What happens in a first session?</button>
@@ -761,7 +1153,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
-    <div class="footer-logo">Zenyssa<span>.</span></div>
+    <div class="footer-logo">Zenywsa<span>.</span></div>
     <p>Transformative Theta Healing with Anjali — for clients in Denmark, India, and across the world. Every session is a step toward the life you deserve.</p>
   </div>
   <div class="footer-links-col">
@@ -772,6 +1164,8 @@
       <li><a href="#who">Who it's for</a></li>
       <li><a href="#about">About Anjali</a></li>
       <li><a href="#pricing">Sessions & pricing</a></li>
+      <li><a href="#calendar-booking">Book a session</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
   </div>
   <div class="footer-links-col">
@@ -786,14 +1180,14 @@
   <div class="footer-links-col">
     <h4>Connect</h4>
     <ul>
-      <li><a href="#">hello@Zenyssa.com</a></li>
+      <li><a href="#">hello@zenywsa.com</a></li>
       <li><a href="#">Instagram</a></li>
       <li><a href="#">LinkedIn</a></li>
     </ul>
   </div>
 </footer>
 <div class="footer-bottom">
-  <p>© 2025 Zenyssa · Anjali · All rights reserved.</p>
+  <p>© 2025 Zenywsa · Anjali · All rights reserved.</p>
   <p>Governed by the laws of Denmark / EU · GDPR compliant</p>
 </div>
 
@@ -848,13 +1242,59 @@ function changeMonth(dir) {
 }
 renderCal();
 
-// Simple chatbot responses
+// FAQ accordion
+function toggleFAQ(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  // Close all open items
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// FAQ category filter
+function filterFAQ(cat, btn) {
+  document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const items = document.querySelectorAll('.faq-item, .faq-group-label');
+  items.forEach(el => {
+    if (cat === 'all' || el.dataset.cat === cat) {
+      el.style.display = '';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.getElementById('faq-no-results').style.display = 'none';
+  document.querySelector('.faq-search').value = '';
+}
+
+// FAQ search
+function searchFAQ(query) {
+  const q = query.toLowerCase().trim();
+  const items = document.querySelectorAll('.faq-item');
+  const labels = document.querySelectorAll('.faq-group-label');
+  labels.forEach(l => l.style.display = q ? 'none' : '');
+  // Reset category buttons
+  document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.faq-cat-btn[onclick*="all"]').classList.add('active');
+
+  let visibleCount = 0;
+  items.forEach(item => {
+    const text = item.querySelector('.faq-q-text').textContent.toLowerCase()
+      + item.querySelector('.faq-answer').textContent.toLowerCase();
+    const match = !q || text.includes(q);
+    item.style.display = match ? '' : 'none';
+    if (match) visibleCount++;
+  });
+  document.getElementById('faq-no-results').style.display = (!q || visibleCount > 0) ? 'none' : 'block';
+}
+
+
 const responses = {
   'first session': "In your first intro session (30 min), Anjali will get to know you, understand what you'd like to work on, and guide you gently into the theta brainwave state. It's a calm, conversational experience — there's nothing you need to do or prepare except show up open.",
   'cost': "Sessions start at €60 for a 30-minute intro. Full 60-minute sessions are €120, and a package of 3 sessions is €300 (saving you €60). Payment is accepted by card, MobilePay, PayPal, bank transfer, or UPI.",
   'safe': "Yes, Theta Healing is gentle and non-invasive. You remain fully conscious and in control throughout. It's a complementary practice — meaning it works alongside, not instead of, medical or psychological care. Anjali always creates a safe, confidential space.",
   'prepare': "There's nothing special you need to do. Come with an open mind and think about what area of life you'd most like to address. Make sure you're in a quiet space for your online session. That's it!",
-  'default': "That's a great question! For specific details, I'd recommend reaching out to Anjali directly at hello@Zenyssa.com. She'd love to hear from you and can answer with full context."
+  'default': "That's a great question! For specific details, I'd recommend reaching out to Anjali directly at hello@zenywsa.com. She'd love to hear from you and can answer with full context."
 };
 
 function getResponse(msg) {
